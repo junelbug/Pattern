@@ -3,4 +3,4 @@ Pattern Code Review
 
 ----------
 
-Only Factory Pattern has been added so far. 
+1. Factory Pattern
