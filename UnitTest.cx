@@ -1,0 +1,56 @@
+using DocumentExtraction.Portal;
+using NSubstitute;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DocumentExtraction.PortalTest.UnitTests
+{
+    class NetageUnitTest
+    {
+        private IWebDriver _driver;
+        private IWebElement _element;
+        private IPortal _classUnderTest;
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            //Initialize mocks
+            _driver = Substitute.For<IWebDriver>();
+            _element = Substitute.For<IWebElement>();
+
+            //Set up mock returns
+            _driver.FindElement(Arg.Any<By>()).Returns(_element);
+            _element.FindElement(Arg.Any<By>()).Returns(_element);
+
+            _classUnderTest = new NetagePortal(_driver);
+        }
+
+
+        [Test]
+        public void TestLoginReturnsTrue()
+        {
+            Assert.IsTrue(_classUnderTest.LogIn("user", "pass"));
+        }
+
+        [Test]
+        public void TestNavigateReturnsTrue()
+        {
+            Assert.IsTrue(_classUnderTest.Navigate("s", "s", "s"));
+        }
+
+        [Test]
+        public void TestDownloadReturnsTrue()
+        {
+            Assert.IsTrue(_classUnderTest.SelectDownloadFile());
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            _driver.Quit();
+        }
+    }
+}
